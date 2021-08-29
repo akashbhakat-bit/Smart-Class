@@ -1,0 +1,44 @@
+<html>
+    <head></head>
+    <body>
+        <form id="login-form" class="form" action="/signup_user" method="post">
+            <h3 >Sign up</h3>
+            <div >
+                <label for="name" class="text-info">Name</label><br>
+                <input type="text" name="name" id="name" class="form-control">
+            </div>
+            <div >
+                <label for="role" class="text-info">Student Or Teacher</label><br>
+                <input type="text" name="role" id="role" class="form-control">
+            </div>
+            <div >
+                <label for="username" class="text-info">Username:</label><br>
+                <input type="text" name="username" id="username" class="form-control">
+            </div>
+            <div >
+                <label for="password" class="text-info">Password:</label><br>
+                <input type="text" name="password" id="password" class="form-control">
+            </div>
+            <div >
+                <button type="submit" >submit</button>
+            </div>
+            
+        </form>
+
+upload photo
+
+    
+    <form method="post" action="/signup_user_photo" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input type="file" name="file" class="form-control" autocomplete="off" required>
+            </p>
+        </dl>
+        <p>
+            <button type="submit" >submit</button>
+        </p>
+    </form>
+    
+
+    </body>
+</html>

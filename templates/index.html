@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>Smart Class</h1>
+    <form>
+        <label for="username">Name: {{ name }}</label>
+        <span hidden><input type="text" name="username" id="username" value= {{ name }}></span>
+        <button id="join_leave">Join call</button>
+        <button id="share_screen" disabled>Share screen</button>
+        <button id="toggle_chat" disabled>Toggle chat</button>
+
+    </form>
+    {% if role=="teacher" %}
+    <button onclick="see_student_info()">See Student Informations</button>
+    {% endif %}
+
+
+
+    {% if show_present == 1 %}
+
+    <div class="container my-3">
+        <h2>Attendees</h2>
+        {% if show_details==1 %}
+          
+        {% if emotions|length == 0 %}
+
+        <div class="alert alert-dark" role="alert">
+            No Details found. 
+        </div>
+        {% else %}
+        
+
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th scope="col">Time Stamp</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Emotion</th>
+                    <th scope="col">Attentiveness</th>
+                    
+
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in emotions %}
+                <tr>
+                    <td>{{order.date_created}}</td>
+                    <td>{{order.name}}</td>
+                    <td>{{order.emotion}}</td>
+                    <td>{{order.attention}}</td>
+
+                    
+                       
+                           
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+
+        
+        {% else %}
+
+        {% if attendance|length == 0 %}
+
+        <div class="alert alert-dark" role="alert">
+            No Attendees found. 
+        </div>
+        {% else %}
+        
+
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th scope="col">Time Stamp</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Attendance</th>
+                    
+
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in attendance %}
+                <tr>
+                    <td>{{order.date_created}}</td>
+                    <td>{{order.name}}</td>
+                    <td>{{order.attend}}</td>
+                    
+                        <a href="/show_detailed_info/{{order.name}}" type="button"
+                            class="btn btn-outline-dark btn-sm mx-1" >See Detailed Information</button>
+                           
+
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+    </div>
+    {% endif %}
+    {% else %}
+
+    <p id="count">Disconnected.</p>
+    <div id="root">
+        <div id="container" class="container">
+            <div id="local" class="participant">
+                <div></div>
+                <div class="label">Me</div>
+            </div>
+            <!-- more participants will be added dynamically here -->
+        </div>
+        <div id="chat">
+            <div id="chat-scroll">
+                <div id="chat-content">
+                    <!-- chat content will be added dynamically here -->
+                </div>
+            </div>
+            <input id="chat-input" type="text">
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/conversations/releases/1.0.0/twilio-conversations.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+
+    <p hidden>
+    <form action="/see_student_info_presents" id="see_student_info">
+        <input type="text" name="see_student_info" id="see_student_info" method="post">
+    </form>
+
+    </p>
+    <script>
+        function see_student_info() {
+            document.getElementById("see_student_info").submit();
+        }
+    </script>
+
+
+</body>
+
+</html>
